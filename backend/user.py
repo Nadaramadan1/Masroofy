@@ -1,3 +1,10 @@
+# class User <<entity>> {
+#  -userName: string
+#  -userId: int
+#  -passwordHash: string
+#  -email: string
+# }
+
 class User:
     def __init__(self, user_id, user_name, email, password_hash):
         self.user_id = user_id
