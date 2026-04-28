@@ -11,3 +11,9 @@ class User:
         self.user_name = user_name
         self.email = email
         self.password_hash = password_hash
+
+    def __str__(self):
+        return f"User: {self.user_name} | {self.email}"
+
+    def __repr__(self):
+        return self.__str__()
