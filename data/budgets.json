@@ -1,0 +1,11 @@
+{
+  "activeCycle": {
+    "cycleId": 1,
+    "userId": 101,
+    "totalAllowance": 3000,
+    "remainingBalance": 3000,
+    "startDate": "2026-04-01",
+    "endDate": "2026-04-30",
+    "isActive": true
+  }
+}

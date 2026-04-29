@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Masroofy Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #2c3e50;
+            padding: 15px;
+        }
+
+        .navbar a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        /* CARDS */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        /* BUDGET SECTION */
+        .budget-grid {
+            display: flex;
+            gap: 15px;
+        }
+
+        /* PIE CHART */
+        .pie-chart {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            margin: auto;
+            background: conic-gradient(
+                #e74c3c 0% 40%,
+                #3498db 40% 70%,
+                #2ecc71 70% 100%
+            );
+            position: relative;
+        }
+
+        .pie-center {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            top: 40px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* LEGEND */
+        .legend {
+            margin-top: 10px;
+        }
+
+        .legend div {
+            margin: 5px 0;
+        }
+
+        .red { color: #e74c3c; }
+        .blue { color: #3498db; }
+        .green { color: #2ecc71; }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <a href="#">Dashboard</a>
+    <a href="#">Add Expense</a>
+    <a href="#">History</a>
+</div>
+
+<div class="container">
+
+    <!-- ================= BUDGET ================= -->
+    <div class="card">
+
+        <h2>💰 Budget Cycle Overview</h2>
+
+        <div class="budget-grid">
+
+            <div>
+                <p><b>Total Allowance:</b> 3000 EGP</p>
+                <p><b>Remaining:</b> 1800 EGP</p>
+                <p><b>Start:</b> 2026-04-01</p>
+                <p><b>End:</b> 2026-04-30</p>
+            </div>
+
+            <!-- PIE CHART -->
+            <div>
+                <div class="pie-chart">
+                    <div class="pie-center">60%</div>
+                </div>
+
+                <div class="legend">
+                    <div class="red">● Food</div>
+                    <div class="blue">● Transport</div>
+                    <div class="green">● Shopping</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- EXPENSES -->
+    <div class="card">
+        <h2>🧾 Recent Expenses</h2>
+
+        <ul>
+            <li>Food - 200 EGP</li>
+            <li>Transport - 50 EGP</li>
+            <li>Shopping - 300 EGP</li>
+        </ul>
+
+    </div>
+
+</div>
+
+</body>
+</html>

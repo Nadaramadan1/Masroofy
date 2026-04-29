@@ -1,57 +1,82 @@
-from datetime import date
+import os
+import json
+from flask import Flask, render_template
 
-from expense import Expense
-from category import Category
-from budget_cycle import BudgetCycle
-from expense_service import ExpenseService
-from notification_service import NotificationService
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates")
+)
+
+DATA_FILE = os.path.join(BASE_DIR, "data", "budgets.json")
+
+def load_budget():
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+@app.route("/")
+def dashboard():
+    budget = load_budget()
+    return render_template("dashboard.html", budget=budget)
 
 if __name__ == "__main__":
+    app.run(debug=True)
+import os
+import json
+from collections import defaultdict
+from flask import Flask, render_template
 
-    print("\n========== SYSTEM STARTED ==========\n")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    # ================= SERVICE =================
-    service = ExpenseService()
+app = Flask(
+    __name__,
+    template_folder=os.path.join(BASE_DIR, "templates")
+)
 
-    # ================= OBSERVER =================
-    notifier = NotificationService()
-    service.register_observer(notifier)
+# ================= LOAD DATA =================
+def load_budget():
+    with open(os.path.join(BASE_DIR, "data", "budgets.json"), "r", encoding="utf-8") as f:
+        return json.load(f)
 
-    # ================= CATEGORY =================
-    food = Category(1, "Food")
-    transport = Category(2, "Transport")
+def load_expenses():
+    with open(os.path.join(BASE_DIR, "data", "expenses.json"), "r", encoding="utf-8") as f:
+        return json.load(f)
 
-    # ================= BUDGET CYCLE =================
-    cycle = BudgetCycle(
-        cycle_id=1,
-        user_id=1,
-        total_allowance=1000,
-        start_date=date.today(),
-        end_date=date(2026, 12, 31)
+# ================= CHART LOGIC =================
+def calculate_chart_data(expenses):
+    totals = defaultdict(float)
+    total_spent = 0
+
+    for e in expenses:
+        totals[e["category"]] += e["amount"]
+        total_spent += e["amount"]
+
+    chart_data = {}
+
+    if total_spent == 0:
+        return {}
+
+    for cat, value in totals.items():
+        chart_data[cat] = round((value / total_spent) * 100, 2)
+
+    return chart_data
+
+# ================= DASHBOARD =================
+@app.route("/")
+def dashboard():
+    budget = load_budget()
+    expenses = load_expenses()
+
+    chart_data = calculate_chart_data(expenses)
+
+    return render_template(
+        "dashboard.html",
+        budget=budget,
+        expenses=expenses,
+        chart_data=chart_data
     )
 
-    service.budget_cycle = cycle
-
-    # ================= ADD EXPENSES =================
-    print("\n--- ADD EXPENSES ---")
-
-    e1 = service.add_expense(1, 1, 200, food.category_id)
-    e2 = service.add_expense(1, 1, 300, transport.category_id)
-    e3 = service.add_expense(1, 1, 250, food.category_id)
-
-    # ================= UPDATE =================
-    print("\n--- UPDATE EXPENSE ---")
-    service.update_expense(e1.expense_id, 220)
-
-    # ================= DELETE =================
-    print("\n--- DELETE EXPENSE ---")
-    service.delete_expense(e2.expense_id)
-
-    # ================= FINAL STATE =================
-    print("\n========== FINAL STATE ==========")
-    print("Remaining:", cycle.remaining_balance)
-    print("Active:", cycle.is_active)
-    print("Total:", len(service.get_expenses_by_cycle(1)))
-
-    print("\n========== SYSTEM END ==========")
+# ================= RUN =================
+if __name__ == "__main__":
+    app.run(debug=True)
