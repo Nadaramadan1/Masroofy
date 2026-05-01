@@ -30,7 +30,7 @@
                 <div class="alert alert-danger">{{ warning_over }}</div>
             {% endif %}
             {% if not warning_80 and not warning_over %}
-                <div class="alert alert-success">✔ Budget is under control</div>
+                <div class="alert alert-success">Budget is under control✔</div>
             {% endif %}
         </div>
         {% endif %}
@@ -81,14 +81,23 @@
         </div>
     </div>
 
-    <script>
-        fetch("/chart-data")
-            .then(res => res.json())
-            .then(chartData => {
-                const labels = Object.keys(chartData);
-                const values = Object.values(chartData);
-                
-                if (labels.length === 0) return; // Don't render empty chart
+        <!-- ================= CHART SCRIPT ================= -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            fetch("/chart-data")
+                .then(res => {
+                    if (!res.ok) throw new Error("API error");
+                    return res.json();
+                })
+                .then(chartData => {
+
+                    if (!chartData || Object.keys(chartData).length === 0) {
+                        console.log("No data available");
+                        return;
+                    }
+
+                    const labels = Object.keys(chartData);
+                    const values = Object.values(chartData);
 
                 new Chart(document.getElementById("expenseChart"), {
                     type: "doughnut", // Changed to doughnut for a more modern look

@@ -138,7 +138,10 @@ def history():
     sortedList = sorted(transactionsList, key=lambda x: x.get('date', ''), reverse=True)
     
     return render_template("history.html", transactions=sortedList)
-
+@app.route("/chart-data")
+def chart_data_api():
+    expenses = load_expenses()
+    return jsonify(calculate_chart_data(expenses))
 # ================= RUN =================
 if __name__ == "__main__":
     app.run(debug=True)
