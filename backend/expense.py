@@ -66,7 +66,7 @@ class Expense:
     user_id: int
     cycle_id: int
     amount: float
-    category_id: int
+    category_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
     def __post_init__(self) -> None:
@@ -78,8 +78,8 @@ class Expense:
             raise ValueError("cycle_id must be a positive integer.")
         if self.amount <= 0:
             raise ValueError("Expense amount must be greater than zero.")
-        if self.category_id <= 0:
-            raise ValueError("category_id must be a positive integer.")
+        if not self.category_id:
+            raise ValueError("category_id must be provided.")
 
     def __str__(self) -> str:
         return (

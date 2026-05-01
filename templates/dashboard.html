@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masroofy Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <nav class="navbar">
-        <a href="/" class="logo">Masroofy</a>
-        <div class="nav-links">
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('add_expense') }}">Add Expense</a>
-            <a href="{{ url_for('history') }}">History</a>
-            <a href="{{ url_for('logout') }}" class="logout">Logout</a>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
+{% block title %}Dashboard | Masroofy{% endblock %}
+
+{% block content %}
     <div class="container">
         <!-- Alerts Section -->
         {% if warning_80 or warning_over or (not warning_80 and not warning_over) %}
@@ -58,6 +43,31 @@
                             <div style="font-weight: 500;">{{ end_date }}</div>
                         </div>
                     </div>
+
+                    {% if safe_daily_limit > 0 %}
+                    <div class="stat-item" style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color);">
+                        <div class="stat-label">Safe Daily Limit</div>
+                        
+                        {% if is_final_day %}
+                        <div style="display: inline-block; background: var(--danger); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.75rem; margin-bottom: 0.5rem; font-weight: bold;">
+                            ⚠ FINAL DAY
+                        </div>
+                        {% endif %}
+                        
+                        {% if is_positive_rollover %}
+                        <div class="stat-value" style="color: var(--success); font-size: 1.5rem;">
+                        {% else %}
+                        <div class="stat-value" style="color: var(--danger); font-size: 1.5rem;">
+                        {% endif %}
+                            {{ "%.2f"|format(safe_daily_limit) }} <span style="font-size: 0.9rem; color: var(--text-muted);">EGP/day</span>
+                        </div>
+                        {% if not is_positive_rollover %}
+                        <div style="font-size: 0.85rem; color: var(--danger); margin-top: 0.25rem;">⚠ Negative Rollover: Your daily limit has been reduced.</div>
+                        {% else %}
+                        <div style="font-size: 0.85rem; color: var(--success); margin-top: 0.25rem;">Positive Rollover: Great job keeping under budget!</div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
                 </div>
                 <div class="chart-container">
                     <canvas id="expenseChart"></canvas>
@@ -82,7 +92,6 @@
     </div>
 
         <!-- ================= CHART SCRIPT ================= -->
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             fetch("/chart-data")
                 .then(res => {
@@ -130,5 +139,4 @@
                 });
             }).catch(err => console.error("Chart Error:", err));
     </script>
-</body>
-</html>
+{% endblock %}

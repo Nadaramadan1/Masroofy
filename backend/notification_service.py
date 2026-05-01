@@ -35,3 +35,12 @@ class NotificationService(Observer):
 
     def send_budget_exceeded_notification(self):
         print("ALERT: Budget exceeded")
+
+    def notifyCycleCreated(self):
+        print("[Notification] New budget cycle created successfully.")
+
+    def checkThreshold(self, budget_cycle):
+        self.update({"cycle": budget_cycle})
+
+    def send(self, message):
+        print(f"[Push Notification to User] {message}")

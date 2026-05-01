@@ -1,32 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Expense - Masroofy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <nav class="navbar">
-        <a href="/" class="logo">Masroofy</a>
-        <div class="nav-links">
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('add_expense') }}">Add Expense</a>
-            <a href="{{ url_for('history') }}">History</a>
-            <a href="{{ url_for('logout') }}" class="logout">Logout</a>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
-    <div class="container" style="max-width: 600px;">
-        <div class="card">
-            <h2>Add New Expense</h2>
-            <p class="text-muted mb-4">Record a new spending entry for your active budget cycle.</p>
+{% block title %}Add Expense - Masroofy{% endblock %}
 
-            {% with messages = get_flashed_messages(with_categories=true) %} 
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}">{{ message }}</div>
-                {% endfor %} 
-            {% endwith %}
+{% block content %}
+<div class="container" style="max-width: 600px;">
+    <div class="card">
+        <h2>Add New Expense</h2>
+        <p class="text-muted mb-4">Record a new spending entry for your active budget cycle.</p>
 
             <form action="{{ url_for('add_expense') }}" method="POST">
                 <div class="form-group">
@@ -69,11 +49,10 @@
 
                 <button type="submit" class="btn btn-primary" style="width: 100%;">Save Expense</button>
             </form>
-        </div>
     </div>
+</div>
 
-    <script>
-        document.getElementById("expense_date").value = new Date().toISOString().split("T")[0];
-    </script>
-</body>
-</html>
+<script>
+    document.getElementById("expense_date").value = new Date().toISOString().split("T")[0];
+</script>
+{% endblock %}

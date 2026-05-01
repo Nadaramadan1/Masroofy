@@ -1,22 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaction History - Masroofy</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <nav class="navbar">
-        <a href="/" class="logo">Masroofy</a>
-        <div class="nav-links">
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-            <a href="{{ url_for('add_expense') }}">Add Expense</a>
-            <a href="{{ url_for('history') }}">History</a>
-            <a href="{{ url_for('logout') }}" class="logout">Logout</a>
-        </div>
-    </nav>
+{% extends "base.html" %}
 
+{% block title %}Transaction History - Masroofy{% endblock %}
+
+{% block content %}
     <div class="container">
         <div class="card">
             <h2>Transaction History Review</h2>
@@ -45,5 +31,4 @@
             {% endif %}
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
