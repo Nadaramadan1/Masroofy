@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
     <title>Masroofy Dashboard</title>
 
+    <!-- CSS File -->
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"> -->
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial;
+            font-family: Arial, sans-serif;
             margin: 0;
             background: #f4f6f8;
         }
@@ -13,138 +24,268 @@
         /* NAVBAR */
         .navbar {
             background: #2c3e50;
-            padding: 15px;
-        }
-
-        .navbar a {
-            color: white;
-            margin-right: 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .container {
-            padding: 20px;
-        }
-
-        /* CARDS */
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        /* BUDGET SECTION */
-        .budget-grid {
+            padding: 12px 18px;
             display: flex;
             gap: 15px;
         }
 
-        /* PIE CHART */
-        .pie-chart {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            margin: auto;
-            background: conic-gradient(
-                #e74c3c 0% 40%,
-                #3498db 40% 70%,
-                #2ecc71 70% 100%
-            );
-            position: relative;
-        }
-
-        .pie-center {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: white;
-            border-radius: 50%;
-            top: 40px;
-            left: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .navbar a {
+            color: white;
+            text-decoration: none;
             font-weight: bold;
+            font-size: 16px;
         }
 
-        /* LEGEND */
-        .legend {
-            margin-top: 10px;
+        /* MAIN CONTAINER */
+        .container {
+            padding: 15px;
         }
 
-        .legend div {
-            margin: 5px 0;
+        /* CARD (تصغير + شكل أنعم) */
+        .card {
+            background: white;
+            padding: 15px 18px;
+            border-radius: 15px;
+            margin-bottom: 5px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
         }
 
-        .red { color: #e74c3c; }
-        .blue { color: #3498db; }
-        .green { color: #2ecc71; }
+        /* TITLE */
+        .card h2,
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: #2c3e50;
+
+        }
+
+        /* BUDGET GRID */
+        .budget-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .expense-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* كل expense كأنه card صغيرة */
+        .expense-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: #f9fafc;
+            padding: 10px 12px;
+            border-radius: 8px;
+
+            border: 1px solid #eee;
+        }
+
+        /* category */
+        .expense-cat {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        /* amount */
+        .expense-amount {
+            font-weight: bold;
+            color: #e74c3c;
+            font-size: 14px;
+        }
+
+        /* INFO BOX */
+        .budget-info {
+            flex: 1;
+            min-width: 220px;
+        }
+
+        /* POINTS STYLE (النصوص) */
+        .budget-info p {
+            margin: 6px 0;
+            font-size: px;
+            color: #333;
+        }
+
+        .budget-info b {
+            color: #2c3e50;
+            font-size: 18pX;
+        }
+
+        /* CHART BOX */
+        .chart-box {
+            width: 250px;
+            height: 250px;
+        }
+
+        /* CANVAS */
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* ALERT BOX */
+        .card p {
+            margin: 6px 0;
+            font-size: 16px;
+        }
+
+        /* COLORS */
+        .card p[style*="orange"] {
+            color: #f39c12 !important;
+        }
+
+        .card p[style*="red"] {
+            color: #e74c3c !important;
+        }
+
+        .card p[style*="green"] {
+            color: #27ae60 !important;
+        }
+
+        /* EXPENSE LIST */
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            padding: 6px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 14px;
+        }
+
+        ul li:last-child {
+            border-bottom: none;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .chart-box {
+                width: 100%;
+                height: 220px;
+            }
+        }
     </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar" style="display: flex; justify-content: space-between; align-items: center;">
-    <div>
+    <!-- NAVBAR -->
+    <div class="navbar">
         <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="#">Add Expense</a>
-        <a href="#">History</a>
+        <a href="{{ url_for('add_expense') }}">Add Expense</a>
+        <a href="{{ url_for('history') }}">History</a>
     </div>
-    <div style="color: white; font-size: 0.9rem;">
-        <span>Welcome, <b>{{ user_name }}</b></span>
-        <a href="{{ url_for('logout') }}" style="margin-left: 20px; color: #ff7675;">Logout</a>
-    </div>
-</div>
 
-<div class="container">
+    <div class="container">
 
-    <!-- ================= BUDGET ================= -->
-    <div class="card">
+        <!-- alert -->
+        <div class="card">
+            <h3>⚠ Alerts</h3>
 
-        <h2>💰 Budget Cycle Overview</h2>
+            {% if warning_80 %}
+            <p style="color: orange;">{{ warning_80 }}</p>
+            {% endif %}
 
-        <div class="budget-grid">
+            {% if warning_over %}
+            <p style="color: red; font-weight: bold;">{{ warning_over }}</p>
+            {% endif %}
 
-            <div>
-                <p><b>Total Allowance:</b> 3000 EGP</p>
-                <p><b>Remaining:</b> 1800 EGP</p>
-                <p><b>Start:</b> 2026-04-01</p>
-                <p><b>End:</b> 2026-04-30</p>
+            {% if not warning_80 and not warning_over %}
+            <p style="color: green;">✔ Budget is under control</p>
+            {% endif %}
+        </div>
+
+
+
+
+        <!-- ================= BUDGET ================= -->
+        <div class="card">
+
+            <h2>💰 Budget Cycle Overview</h2>
+
+            <div class="budget-grid">
+
+                <div class="budget-info">
+                    <p><b>Total:</b> {{ total_budget }} EGP</p>
+                    <p><b>Remaining:</b> {{ remaining }} EGP</p>
+                    <p><b>Start:</b> {{ start_date }}</p>
+                    <p><b>End:</b> {{ end_date }}</p>
+                </div>
+
+                <div class="chart-box">
+                    <canvas id="expenseChart"></canvas>
+                </div>
+
             </div>
+        </div>
 
-            <!-- PIE CHART -->
-            <div>
-                <div class="pie-chart">
-                    <div class="pie-center">60%</div>
-                </div>
 
-                <div class="legend">
-                    <div class="red">● Food</div>
-                    <div class="blue">● Transport</div>
-                    <div class="green">● Shopping</div>
+        <!-- ================= RECENT EXPENSES ================= -->
+        <div class="card">
+            <h2>🧾 Recent Expenses</h2>
+
+            <div class="expense-grid">
+                {% for e in expenses %}
+                <div class="expense-item">
+                    <div class="expense-cat">{{ e.category }}</div>
+                    <div class="expense-amount">{{ e.amount }} EGP</div>
                 </div>
+                {% endfor %}
             </div>
 
         </div>
-    </div>
 
-    <!-- EXPENSES -->
-    <div class="card">
-        <h2>🧾 Recent Expenses</h2>
+        <!-- ================= CHART SCRIPT ================= -->
+        <script>
+            fetch("/chart-data")
+                .then(res => {
+                    if (!res.ok) throw new Error("API error");
+                    return res.json();
+                })
+                .then(chartData => {
 
-        <ul>
-            <li>Food - 200 EGP</li>
-            <li>Transport - 50 EGP</li>
-            <li>Shopping - 300 EGP</li>
-        </ul>
+                    if (!chartData || Object.keys(chartData).length === 0) {
+                        console.log("No data available");
+                        return;
+                    }
 
-    </div>
+                    const labels = Object.keys(chartData);
+                    const values = Object.values(chartData);
 
-</div>
+                    new Chart(document.getElementById("expenseChart"), {
+                        type: "pie",
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: values,
+                                backgroundColor: [
+                                    "#e74c3c",
+                                    "#3498db",
+                                    "#2ecc71",
+                                    "#f1c40f",
+                                    "#9b59b6"
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
+                        }
+                    });
+
+                })
+                .catch(err => console.log("Chart Error:", err));
+        </script>
 
 </body>
+
 </html>
