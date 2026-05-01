@@ -155,7 +155,7 @@ class ExpenseService:
 
 
         def load_expenses_from_json(self):
-        """Load expenses from JSON file into memory."""
+            """Load expenses from JSON file into memory."""
         try:
             with open(DATA_FILE, 'r', encoding='utf-8') as f:
                 expenses_data = json.load(f)
