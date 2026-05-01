@@ -10,5 +10,23 @@
     {
         "category": "Shopping",
         "amount": 1000
+    },
+    {
+        "amount": 300.0,
+        "category": "4",
+        "date": "2026-05-01",
+        "note": ""
+    },
+    {
+        "amount": 50.0,
+        "category": "6",
+        "date": "2026-05-01",
+        "note": "other"
+    },
+    {
+        "amount": 1000.0,
+        "category": "1",
+        "date": "2026-05-01",
+        "note": "food"
     }
 ]

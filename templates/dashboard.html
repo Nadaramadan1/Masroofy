@@ -180,16 +180,17 @@
 
     <!-- NAVBAR -->
     <div class="navbar">
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('add_expense') }}">Add Expense</a>
-        <a href="{{ url_for('history') }}">History</a>
+        <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+        <a href="{{ url_for('history') }}">📋 History</a>
+        <a href="{{ url_for('add_expense') }}">➕ Add Expense</a>
+        <a href="{{ url_for('logout') }}" style="float: right"> 🚪 Logout</a>
     </div>
 
     <div class="container">
 
         <!-- alert -->
         <div class="card">
-            <h3>⚠ Alerts</h3>
+            <h3>Alerts</h3>
 
             {% if warning_80 %}
             <p style="color: orange;">{{ warning_80 }}</p>
@@ -200,7 +201,7 @@
             {% endif %}
 
             {% if not warning_80 and not warning_over %}
-            <p style="color: green;">✔ Budget is under control</p>
+            <p style="color: green;">Budget is under control✔</p>
             {% endif %}
         </div>
 
@@ -210,7 +211,7 @@
         <!-- ================= BUDGET ================= -->
         <div class="card">
 
-            <h2>💰 Budget Cycle Overview</h2>
+            <h2>Budget Cycle Overview</h2>
 
             <div class="budget-grid">
 
@@ -231,7 +232,7 @@
 
         <!-- ================= RECENT EXPENSES ================= -->
         <div class="card">
-            <h2>🧾 Recent Expenses</h2>
+            <h2>Recent Expenses</h2>
 
             <div class="expense-grid">
                 {% for e in expenses %}
@@ -245,6 +246,7 @@
         </div>
 
         <!-- ================= CHART SCRIPT ================= -->
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
         <script>
             fetch("/chart-data")
                 .then(res => {
