@@ -1,5 +1,14 @@
 [
-  { "amount": 200, "category": "Food" },
-  { "amount": 100, "category": "Transport" },
-  { "amount": 300, "category": "Food" }
+    {
+        "category": "Food",
+        "amount": 1000
+    },
+    {
+        "category": "Transport",
+        "amount": 2500
+    },
+    {
+        "category": "Shopping",
+        "amount": 1000
+    }
 ]
