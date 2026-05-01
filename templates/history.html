@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transaction History - Masroofy</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: Arial, sans-serif; margin: 0; background: #f4f6f8; }
+        .navbar { background: #2c3e50; padding: 12px 18px; display: flex; gap: 15px; }
+        .navbar a { color: white; text-decoration: none; font-weight: bold; font-size: 16px; }
+        .container { padding: 15px; }
+        .card { background: white; padding: 15px 18px; border-radius: 15px; margin-bottom: 5px; box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06); }
+        .card h2 { margin: 0 0 10px 0; font-size: 20px; color: #2c3e50; }
+        .expense-grid { display: flex; flex-direction: column; gap: 10px; }
+        .expense-item { display: flex; justify-content: space-between; align-items: center; background: #f9fafc; padding: 10px 12px; border-radius: 8px; border: 1px solid #eee; }
+        .expense-details { display: flex; flex-direction: column; }
+        .expense-cat { font-weight: bold; color: #2c3e50; font-size: 14px; }
+        .expense-date { font-size: 12px; color: #7f8c8d; }
+        .expense-amount { font-weight: bold; color: #e74c3c; font-size: 14px; }
+        .no-transactions { text-align: center; padding: 30px; }
+        .no-transactions h3 { color: #2c3e50; margin-bottom: 10px; }
+        .no-transactions p { color: #7f8c8d; font-size: 16px; margin: 10px 0; }
+        .btn { display: inline-block; background: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-top: 15px; }
+        .btn:hover { background: #2980b9; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="{{ url_for('add_expense') }}">Add Expense</a>
+        <a href="{{ url_for('history') }}">History</a>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h2>Transaction History Review</h2>
+            
+            {% if not transactions %}
+            <div class="no-transactions">
+                <h3>No Transactions Found</h3>
+                <p>Log your first expense</p>
+                <a href="{{ url_for('add_expense') }}" class="btn">Add Expense</a>
+            </div>
+            {% else %}
+            <div class="expense-grid">
+                {% for t in transactions %}
+                <div class="expense-item">
+                    <div class="expense-details">
+                        <span class="expense-cat">{{ t.category }}</span>
+                        <span class="expense-date">{{ t.date }}</span>
+                        {% if t.note %}
+                        <span class="expense-date">Note: {{ t.note }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="expense-amount">{{ t.amount }} EGP</div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

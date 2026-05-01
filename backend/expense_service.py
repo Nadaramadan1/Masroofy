@@ -152,3 +152,75 @@ class ExpenseService:
             if e.expense_id == expense_id:
                 return e
         raise LookupError("Expense not found")
+
+
+        def load_expenses_from_json(self):
+        """Load expenses from JSON file into memory."""
+        try:
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                expenses_data = json.load(f)
+                
+            self._expenses = []
+            for exp_data in expenses_data:
+                self._expenses.append(Expense(
+                    expense_id=exp_data['expense_id'],
+                    user_id=exp_data['user_id'],
+                    cycle_id=exp_data['cycle_id'],
+                    amount=exp_data['amount'],
+                    category_id=exp_data['category_id'],
+                    timestamp=datetime.fromisoformat(exp_data['timestamp'])
+                ))
+                
+            # Update next_id
+            if self._expenses:
+                self._next_id = max(e.expense_id for e in self._expenses) + 1
+            else:
+                self._next_id = 1
+                
+            print(f"[ExpenseService] Loaded {len(self._expenses)} expenses from JSON")
+        except FileNotFoundError:
+            print("[ExpenseService] No expenses file found")
+        except json.JSONDecodeError:
+            print("[ExpenseService] Error decoding JSON file")
+    
+    def save_expenses_to_json(self):
+        """Save current expenses to JSON file."""
+        expenses_data = []
+        for exp in self._expenses:
+            expenses_data.append({
+                'expense_id': exp.expense_id,
+                'user_id': exp.user_id,
+                'cycle_id': exp.cycle_id,
+                'amount': exp.amount,
+                'category_id': exp.category_id,
+                'timestamp': exp.timestamp.isoformat()
+            })
+            
+        os.makedirs(os.path.dirname(DATA_FILE), exist_ok=True)
+        with open(DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(expenses_data, f, indent=4, default=str)
+        
+        print(f"[ExpenseService] Saved {len(expenses_data)} expenses to JSON")
+
+    # Modify other methods to use file I/O
+    def add_expense(self, user_id: int, cycle_id: int, amount: float, category_id: int, timestamp=None):
+        # ... (existing logic) ...
+        
+        # Save to file
+        self.save_expenses_to_json()
+        
+        return new_expense
+
+    def update_expense(self, expense_id: int, amount: float):
+        # ... (existing logic) ...
+        
+        # Save to file
+        self.save_expenses_to_json()
+
+    def delete_expense(self, expense_id: int):
+        # ... (existing logic) ...
+        
+        # Save to file
+        self.save_expenses_to_json()
+
+
