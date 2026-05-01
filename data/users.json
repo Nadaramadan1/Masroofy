@@ -1,0 +1,15 @@
+[
+  {
+    "user_id": 1,
+    "user_name": "Test User",
+    "email": "test@test.com",
+    "password_hash": "scrypt:32768:8:1$pBm0D3PYECgZvE23$4e5a70de1bb1af0c752a8f340adbb1602c31cc38a2947fcf46dfd43c61ab9875df3914dfbb2e895d63bcb59175ab5785d8ef9b50c751b93896752b66bd9f9b32"
+  },
+  {
+    "user_name": "nada",
+    "email": "nada.rshams@gmail.com",
+    "password_hash": "scrypt:32768:8:1$SOLq7VUMGC59EkLQ$a11efc9c0f3ebc698ab8b07dcaf12d15fa8321e1b3675bddd3bf27e762bed3c7b34b847ad3e60ff37be7c3f1d962d2e62bcd28f610020d847e61bd7389a5f4d8",
+    "created_token": "7024fbe253a9884fd2cbe87dafaa24fa",
+    "user_id": 2
+  }
+]

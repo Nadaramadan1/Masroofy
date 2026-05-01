@@ -88,10 +88,16 @@
 <body>
 
 <!-- NAVBAR -->
-<div class="navbar">
-    <a href="#">Dashboard</a>
-    <a href="#">Add Expense</a>
-    <a href="#">History</a>
+<div class="navbar" style="display: flex; justify-content: space-between; align-items: center;">
+    <div>
+        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        <a href="#">Add Expense</a>
+        <a href="#">History</a>
+    </div>
+    <div style="color: white; font-size: 0.9rem;">
+        <span>Welcome, <b>{{ user_name }}</b></span>
+        <a href="{{ url_for('logout') }}" style="margin-left: 20px; color: #ff7675;">Logout</a>
+    </div>
 </div>
 
 <div class="container">
