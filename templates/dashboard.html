@@ -1,291 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masroofy Dashboard</title>
-
-    <!-- CSS File -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-
-    <!-- Chart.js -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f4f6f8;
-        }
-
-        /* NAVBAR */
-        .navbar {
-            background: #2c3e50;
-            padding: 12px 18px;
-            display: flex;
-            gap: 15px;
-        }
-
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        /* MAIN CONTAINER */
-        .container {
-            padding: 15px;
-        }
-
-        /* CARD (تصغير + شكل أنعم) */
-        .card {
-            background: white;
-            padding: 15px 18px;
-            border-radius: 15px;
-            margin-bottom: 5px;
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
-        }
-
-        /* TITLE */
-        .card h2,
-        .card h3 {
-            margin: 0 0 10px 0;
-            font-size: 20px;
-            color: #2c3e50;
-
-        }
-
-        /* BUDGET GRID */
-        .budget-grid {
-            display: flex;
-            justify-content: space-between;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
-        .expense-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        /* كل expense كأنه card صغيرة */
-        .expense-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-
-            background: #f9fafc;
-            padding: 10px 12px;
-            border-radius: 8px;
-
-            border: 1px solid #eee;
-        }
-
-        /* category */
-        .expense-cat {
-            font-weight: bold;
-            color: #2c3e50;
-            font-size: 14px;
-        }
-
-        /* amount */
-        .expense-amount {
-            font-weight: bold;
-            color: #e74c3c;
-            font-size: 14px;
-        }
-
-        /* INFO BOX */
-        .budget-info {
-            flex: 1;
-            min-width: 220px;
-        }
-
-        /* POINTS STYLE (النصوص) */
-        .budget-info p {
-            margin: 6px 0;
-            font-size: px;
-            color: #333;
-        }
-
-        .budget-info b {
-            color: #2c3e50;
-            font-size: 18pX;
-        }
-
-        /* CHART BOX */
-        .chart-box {
-            width: 250px;
-            height: 250px;
-        }
-
-        /* CANVAS */
-        canvas {
-            width: 100% !important;
-            height: 100% !important;
-        }
-
-        /* ALERT BOX */
-        .card p {
-            margin: 6px 0;
-            font-size: 16px;
-        }
-
-        /* COLORS */
-        .card p[style*="orange"] {
-            color: #f39c12 !important;
-        }
-
-        .card p[style*="red"] {
-            color: #e74c3c !important;
-        }
-
-        .card p[style*="green"] {
-            color: #27ae60 !important;
-        }
-
-        /* EXPENSE LIST */
-        ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        ul li {
-            padding: 6px 0;
-            border-bottom: 1px solid #eee;
-            font-size: 14px;
-        }
-
-        ul li:last-child {
-            border-bottom: none;
-        }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .chart-box {
-                width: 100%;
-                height: 220px;
-            }
-        }
-    </style>
 </head>
-
 <body>
-
-    <!-- NAVBAR -->
-    <div class="navbar">
-        <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        <a href="{{ url_for('add_expense') }}">Add Expense</a>
-        <a href="{{ url_for('history') }}">History</a>
-    </div>
+    <nav class="navbar">
+        <a href="/" class="logo">Masroofy</a>
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('add_expense') }}">Add Expense</a>
+            <a href="{{ url_for('history') }}">History</a>
+            <a href="{{ url_for('logout') }}" class="logout">Logout</a>
+        </div>
+    </nav>
 
     <div class="container">
-
-        <!-- alert -->
+        <!-- Alerts Section -->
+        {% if warning_80 or warning_over or (not warning_80 and not warning_over) %}
         <div class="card">
-            <h3>⚠ Alerts</h3>
-
+            <h3>Alerts</h3>
             {% if warning_80 %}
-            <p style="color: orange;">{{ warning_80 }}</p>
+                <div class="alert alert-warning">{{ warning_80 }}</div>
             {% endif %}
-
             {% if warning_over %}
-            <p style="color: red; font-weight: bold;">{{ warning_over }}</p>
+                <div class="alert alert-danger">{{ warning_over }}</div>
             {% endif %}
-
             {% if not warning_80 and not warning_over %}
-            <p style="color: green;">✔ Budget is under control</p>
+                <div class="alert alert-success">✔ Budget is under control</div>
             {% endif %}
         </div>
+        {% endif %}
 
-
-
-
-        <!-- ================= BUDGET ================= -->
+        <!-- Budget Overview -->
         <div class="card">
-
-            <h2>💰 Budget Cycle Overview</h2>
-
-            <div class="budget-grid">
-
-                <div class="budget-info">
-                    <p><b>Total:</b> {{ total_budget }} EGP</p>
-                    <p><b>Remaining:</b> {{ remaining }} EGP</p>
-                    <p><b>Start:</b> {{ start_date }}</p>
-                    <p><b>End:</b> {{ end_date }}</p>
+            <h2>Budget Cycle Overview</h2>
+            <div class="dashboard-overview">
+                <div class="budget-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Total Budget</div>
+                        <div class="stat-value">{{ total_budget }} <span style="font-size: 1rem; color: var(--text-muted);">EGP</span></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Remaining</div>
+                        <div class="stat-value" style="color: var(--success);">{{ remaining }} <span style="font-size: 1rem; color: var(--text-muted);">EGP</span></div>
+                    </div>
+                    <div style="display: flex; gap: 2rem; margin-top: 1.5rem;">
+                        <div>
+                            <div class="stat-label">Start</div>
+                            <div style="font-weight: 500;">{{ start_date }}</div>
+                        </div>
+                        <div>
+                            <div class="stat-label">End</div>
+                            <div style="font-weight: 500;">{{ end_date }}</div>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="chart-box">
+                <div class="chart-container">
                     <canvas id="expenseChart"></canvas>
                 </div>
-
             </div>
         </div>
 
-
-        <!-- ================= RECENT EXPENSES ================= -->
+        <!-- Recent Expenses -->
         <div class="card">
-            <h2>🧾 Recent Expenses</h2>
-
-            <div class="expense-grid">
+            <h2>Recent Expenses</h2>
+            <div class="expense-list">
                 {% for e in expenses %}
                 <div class="expense-item">
-                    <div class="expense-cat">{{ e.category }}</div>
-                    <div class="expense-amount">{{ e.amount }} EGP</div>
+                    <span class="expense-cat">{{ e.category }}</span>
+                    <span class="expense-amount">{{ e.amount }} EGP</span>
                 </div>
+                {% else %}
+                <p class="text-muted text-center mt-4">No recent expenses found.</p>
                 {% endfor %}
             </div>
-
         </div>
+    </div>
 
-        <!-- ================= CHART SCRIPT ================= -->
-        <script>
-            fetch("/chart-data")
-                .then(res => {
-                    if (!res.ok) throw new Error("API error");
-                    return res.json();
-                })
-                .then(chartData => {
+    <script>
+        fetch("/chart-data")
+            .then(res => res.json())
+            .then(chartData => {
+                const labels = Object.keys(chartData);
+                const values = Object.values(chartData);
+                
+                if (labels.length === 0) return; // Don't render empty chart
 
-                    if (!chartData || Object.keys(chartData).length === 0) {
-                        console.log("No data available");
-                        return;
-                    }
-
-                    const labels = Object.keys(chartData);
-                    const values = Object.values(chartData);
-
-                    new Chart(document.getElementById("expenseChart"), {
-                        type: "pie",
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                data: values,
-                                backgroundColor: [
-                                    "#e74c3c",
-                                    "#3498db",
-                                    "#2ecc71",
-                                    "#f1c40f",
-                                    "#9b59b6"
-                                ]
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false
+                new Chart(document.getElementById("expenseChart"), {
+                    type: "doughnut", // Changed to doughnut for a more modern look
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: ["#6366f1", "#f43f5e", "#10b981", "#f59e0b", "#8b5cf6"],
+                            borderWidth: 0,
+                            hoverOffset: 4
+                        }]
+                    },
+                    options: { 
+                        responsive: true, 
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    font: {
+                                        family: "'Inter', sans-serif"
+                                    }
+                                }
+                            }
                         }
-                    });
-
-                })
-                .catch(err => console.log("Chart Error:", err));
-        </script>
-
+                    }
+                });
+            }).catch(err => console.error("Chart Error:", err));
+    </script>
 </body>
-
 </html>

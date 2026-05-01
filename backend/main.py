@@ -8,7 +8,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 app = Flask(
     __name__,
-    template_folder=os.path.join(BASE_DIR, "templates")
+    template_folder=os.path.join(BASE_DIR, "templates"),
+    static_folder=os.path.join(BASE_DIR, "static")
 )
 app.secret_key = os.urandom(24)
 
@@ -100,6 +101,14 @@ def dashboard():
         warning_over=warning_over,
         total_spent=total_spent
     )
+
+@app.route("/chart-data")
+def chart_data():
+    if 'user_id' not in session:
+        return jsonify({})
+    expenses = load_expenses()
+    data = calculate_chart_data(expenses)
+    return jsonify(data)
 
 @app.route("/add", methods=["GET", "POST"])
 def add_expense():
