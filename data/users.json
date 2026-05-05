@@ -67,5 +67,19 @@
     "password_hash": "scrypt:32768:8:1$CHe72yIpVbkIL3jR$13b5ed757d0b4b7824bdcc90b924243491b648d7a678a0c9cac7659ab6fae49eadba822d7018bf4a5d0afd6da84df7cc3c9c9499b11f586108882337d5252f8a",
     "created_token": "879e976ec21bd22cf991f496d8030bf3",
     "user_id": 10
+  },
+  {
+    "user_name": "o",
+    "email": "o@gmail.com",
+    "password_hash": "scrypt:32768:8:1$SbrQr9nApk9awzu6$28e13e89b3d692f62f84d961d1fc13ff65a376d63211cb2e27b986efab5072b1bc5ecce2c1635cbcb48332fc6243ab7e33d738baa1b019efbb2358bf6bc8f41d",
+    "created_token": "365d2f24869d7ce920051e9a63999517",
+    "user_id": 11
+  },
+  {
+    "user_name": "h",
+    "email": "h@gmail.com",
+    "password_hash": "scrypt:32768:8:1$Sx0kvG37TPekKMLT$d6e728803a3af5c4fb3f8048c04d609839233f871e9c879252cfe611ce929d0b2f6064e0d5915fbd83b3c56bc129f7222aca2e0f42b476f26b7476265f3cddb3",
+    "created_token": "a65a3e74047efe39d59371b7f2f56be4",
+    "user_id": 12
   }
 ]
