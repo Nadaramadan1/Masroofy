@@ -1,11 +1,14 @@
 from abc import ABC, abstractmethod
 
+
 class Observer(ABC):
     @abstractmethod
-    def update(self, subject):
+    def update(self, data):
         pass
 
+
 class Subject:
+
     def __init__(self):
         self._observers = []
 
@@ -14,8 +17,9 @@ class Subject:
             self._observers.append(observer)
 
     def detach(self, observer: Observer):
-        self._observers.remove(observer)
+        if observer in self._observers:
+            self._observers.remove(observer)
 
-    def notify_observers(self):
+    def notify_observers(self, data=None):
         for observer in self._observers:
-            observer.update(self)
+            observer.update(data)

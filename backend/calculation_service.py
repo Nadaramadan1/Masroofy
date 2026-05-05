@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
 from datetime import date
+import os
+import json
+
 
 class CalculationStrategy(ABC):
     @abstractmethod
@@ -46,22 +49,40 @@ class CalculationService:
 
     def calculatePercentages(self, category_totals):
         total_spent = sum(category_totals.values())
-        if total_spent == 0: 
-            return {}
-        return {cat: round((val / total_spent) * 100, 2) for cat, val in category_totals.items()}
 
-    def calculateTotalSpending(self, user_id):
-        import os, json
-        # Mimic DB SELECT expenses
-        DATA_FILE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "expenses.json")
+        if total_spent == 0:
+            return {}
+
+        return {
+            cat: round((val / total_spent) * 100, 2)
+            for cat, val in category_totals.items()
+        }
+
+    def calculateTotalSpending(self, user_id, cycle_id):
+        DATA_FILE = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+            "data",
+            "expenses.json"
+        )
+
         try:
             with open(DATA_FILE, "r") as f:
                 expenses = json.load(f)
-                return sum(e["amount"] for e in expenses if e["user_id"] == user_id)
+
+                total = sum(
+                    e["amount"]
+                    for e in expenses
+                    if e["user_id"] == user_id
+                    and e["cycle_id"] == cycle_id
+                )
+
+                return total
+
         except:
             return 0.0
 
     def calculatePercentage(self, total_spent, budget_cycle):
         if not budget_cycle or budget_cycle.total_allowance == 0:
             return 0.0
+
         return (total_spent / budget_cycle.total_allowance) * 100

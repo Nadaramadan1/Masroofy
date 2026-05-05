@@ -18,11 +18,16 @@ class BudgetCycle:
         self.created_at = date.today()
         self.is_active = True
 
+        # check status immediately after creation
+        self.update_status()
+
     def initialize_cycle(self, amount, start_date, end_date):
+
         if amount <= 0:
             raise ValueError("Allowance must be greater than 0")
 
-        if end_date < start_date:
+        # fixed condition
+        if end_date <= start_date:
             raise ValueError("End date must be after start date")
 
         self.total_allowance = float(amount)
@@ -37,9 +42,12 @@ class BudgetCycle:
 
     def reset_cycle(self):
         self.remaining_balance = self.total_allowance
-        self.is_active = True
+
+        # instead of forcing active=True
+        self.update_status()
 
     def deduct_expense(self, amount):
+
         if amount <= 0:
             raise ValueError("Expense must be greater than 0")
 

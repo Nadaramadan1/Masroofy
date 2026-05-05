@@ -6,5 +6,157 @@
         "amount": 150.0,
         "category": "Food",
         "date": "2026-05-01"
+    },
+    {
+        "expense_id": 2,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 500.0,
+        "category": "Transport",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 3,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 1000.0,
+        "category": "Shopping",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 4,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 250.0,
+        "category": "Fun",
+        "date": "2026-01-02"
+    },
+    {
+        "expense_id": 5,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 1000.0,
+        "category": "Food",
+        "date": "2026-05-06"
+    },
+    {
+        "expense_id": 6,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 600.0,
+        "category": "Fun",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 7,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 600.0,
+        "category": "Fun",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 8,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 3000.0,
+        "category": "Other",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 9,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 2000.0,
+        "category": "Health",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 10,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 900.0,
+        "category": "Shopping",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 11,
+        "user_id": 6,
+        "cycle_id": 1,
+        "amount": 300.0,
+        "category": "Food",
+        "date": "2026-05-01"
+    },
+    {
+        "expense_id": 12,
+        "user_id": 8,
+        "cycle_id": 1,
+        "amount": 150.0,
+        "category": "Food",
+        "date": "2026-05-05"
+    },
+    {
+        "expense_id": 13,
+        "user_id": 8,
+        "cycle_id": 1,
+        "amount": 200.0,
+        "category": "Transport",
+        "date": "2026-05-07"
+    },
+    {
+        "expense_id": 14,
+        "user_id": 8,
+        "cycle_id": 1,
+        "amount": 300.0,
+        "category": "Shopping",
+        "date": "2026-05-08"
+    },
+    {
+        "expense_id": 15,
+        "user_id": 8,
+        "cycle_id": 1,
+        "amount": 100.0,
+        "category": "Health",
+        "date": "2026-05-07"
+    },
+    {
+        "expense_id": 16,
+        "user_id": 8,
+        "cycle_id": 1,
+        "amount": 100.0,
+        "category": "Fun",
+        "date": "2026-05-10"
+    },
+    {
+        "expense_id": 17,
+        "user_id": 8,
+        "cycle_id": 1,
+        "amount": 20.0,
+        "category": "Other",
+        "date": "2026-05-05"
+    },
+    {
+        "expense_id": 18,
+        "user_id": 9,
+        "cycle_id": 2,
+        "amount": 200.0,
+        "category": "Food",
+        "date": "2026-05-05"
+    },
+    {
+        "expense_id": 19,
+        "user_id": 9,
+        "cycle_id": 2,
+        "amount": 400.0,
+        "category": "Fun",
+        "date": "2026-05-05"
+    },
+    {
+        "expense_id": 20,
+        "user_id": 10,
+        "cycle_id": 2,
+        "amount": 200.0,
+        "category": "Shopping",
+        "date": "2026-05-05"
     }
 ]

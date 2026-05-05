@@ -9,7 +9,7 @@ class NotificationService(Observer):
             return
 
         cycle = data.get("cycle")
-        if cycle is None:
+        if not cycle:
             return
 
         allowance = cycle.total_allowance
@@ -17,30 +17,27 @@ class NotificationService(Observer):
         if allowance <= 0:
             return
 
-        spent_ratio = (allowance - cycle.remaining_balance) / allowance
+        spent_ratio = 1 - (cycle.remaining_balance / allowance)
+        spent_ratio = max(0, spent_ratio)
 
         print(f"[Notification] Spent ratio: {spent_ratio:.2f}")
 
         # ALERT
         if spent_ratio >= 1:
-            self.send_budget_exceeded_notification()
+            self._send_budget_exceeded()
             return
 
         # WARNING
         if spent_ratio >= 0.8:
-            self.send_warning_notification(spent_ratio)
+            self._send_warning(spent_ratio)
 
-    def send_warning_notification(self, ratio):
+    # ---------------- internal helpers ----------------
+
+    def _send_warning(self, ratio):
         print(f"WARNING: You have used {ratio * 100:.0f}% of your budget")
 
-    def send_budget_exceeded_notification(self):
+    def _send_budget_exceeded(self):
         print("ALERT: Budget exceeded")
 
     def notifyCycleCreated(self):
         print("[Notification] New budget cycle created successfully.")
-
-    def checkThreshold(self, budget_cycle):
-        self.update({"cycle": budget_cycle})
-
-    def send(self, message):
-        print(f"[Push Notification to User] {message}")
