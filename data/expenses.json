@@ -214,5 +214,21 @@
         "amount": 600.0,
         "category": "Food",
         "date": "2026-05-05"
+    },
+    {
+        "expense_id": 28,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 300.0,
+        "category": "Food",
+        "date": "2026-05-13"
+    },
+    {
+        "expense_id": 29,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 1000.0,
+        "category": "Fun",
+        "date": "2026-05-13"
     }
 ]
