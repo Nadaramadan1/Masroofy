@@ -88,5 +88,12 @@
     "password_hash": "scrypt:32768:8:1$hDMrsJIkupUsqBY7$654c79a33a2a1fa873e06fad1b886d56154c240d2bbf573300f77f67b107a697aab032eb802bfc4d77aa2621cb2f093d35e7dbc5235111692bd2d9fdad0fb951",
     "created_token": "753f0d280c0d0e8bc196f9aac743c1d1",
     "user_id": 13
+  },
+  {
+    "user_name": "hana",
+    "email": "hana@gmail.com",
+    "password_hash": "scrypt:32768:8:1$S6HOKAwc7saEJNww$91012a76cec9ae44323d96c2ee66aba8aa417e07fd00f236f45fbcb467493decb858ee5b5ca55e050b7baf879dd3ad0e9feb9cc01eb5593880ef07cf87dcec8c",
+    "created_token": "b3ef5531874766e2661c0357e84ae60d",
+    "user_id": 14
   }
 ]

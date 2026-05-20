@@ -254,5 +254,29 @@
         "amount": 200.0,
         "category": "Shopping",
         "date": "2026-05-20"
+    },
+    {
+        "expense_id": 33,
+        "user_id": 14,
+        "cycle_id": 1,
+        "amount": 150.0,
+        "category": "Food",
+        "date": "2026-05-20"
+    },
+    {
+        "expense_id": 34,
+        "user_id": 14,
+        "cycle_id": 1,
+        "amount": 200.0,
+        "category": "Transport",
+        "date": "2026-05-20"
+    },
+    {
+        "expense_id": 35,
+        "user_id": 14,
+        "cycle_id": 1,
+        "amount": 3000.0,
+        "category": "Shopping",
+        "date": "2026-05-20"
     }
 ]
