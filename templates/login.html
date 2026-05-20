@@ -8,36 +8,168 @@
 {% block flash_messages %}{% endblock %}
 
 {% block content %}
-<div class="auth-container">
-    <div class="auth-header">
-        <h1>Masroofy</h1>
-        <p>Welcome back! Please login.</p>
-    </div>
+<!-- Floating Aurora Background Blobs -->
+<div class="aurora-container">
+    <div class="aurora-orb orb-purple"></div>
+    <div class="aurora-orb orb-indigo"></div>
+    <div class="aurora-orb orb-pink"></div>
+</div>
 
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            {% for category, message in messages %}
-                <div class="alert alert-{{ 'danger' if category == 'error' else 'success' }}" style="margin-bottom: 1.5rem;">
-                    {{ message }}
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <!-- Logo and Header -->
+        <div class="auth-brand">
+            <div class="brand-icon-wrapper">
+                <!-- Premium Custom Wallet/Growth Vector SVG -->
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="brand-svg">
+                    <rect x="3" y="6" width="18" height="13" rx="3" stroke="currentColor" stroke-width="2"/>
+                    <path d="M16 12.5C16 11.6716 16.6716 11 17.5 11H21V14H17.5C16.6716 14 16 13.3284 16 12.5Z" fill="currentColor" stroke="currentColor" stroke-width="2"/>
+                    <circle cx="18.5" cy="12.5" r="1.5" fill="var(--bg-color)"/>
+                    <path d="M7 11V15M10 9V15M13 7V15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <h1 class="brand-title">Masroofy</h1>
+            <p class="brand-subtitle">Smart wealth tracking, simplified.</p>
+        </div>
+
+        <!-- Custom Enhanced Alerts -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="premium-alert alert-{{ 'danger' if category == 'error' else 'success' }}">
+                            <div class="alert-icon">
+                                {% if category == 'error' %}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="alert-svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                    </svg>
+                                {% else %}
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="alert-svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                {% endif %}
+                            </div>
+                            <div class="alert-text">{{ message }}</div>
+                        </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
-        {% endif %}
-    {% endwith %}
+            {% endif %}
+        {% endwith %}
 
-    <form action="/login" method="POST">
-        <div class="auth-form-group">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="name@example.com" required {{ 'disabled' if locked }}>
-        </div>
-        <div class="auth-form-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="••••••••" required {{ 'disabled' if locked }}>
-        </div>
-        <button type="submit" class="auth-btn" {{ 'disabled' if locked }}>Sign In</button>
-    </form>
+        <!-- Form Section -->
+        <form action="/login" method="POST" class="auth-form">
+            <!-- Email Input Group -->
+            <div class="premium-form-group">
+                <label for="email" class="form-label">Email Address</label>
+                <div class="input-relative-container">
+                    <div class="input-icon-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="input-svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <input type="email" id="email" name="email" class="premium-input" placeholder="name@example.com" required {{ 'disabled' if locked }}>
+                </div>
+            </div>
 
-    <div class="auth-footer">
-        Don't have an account? <a href="/register">Register here</a>
+            <!-- Password Input Group -->
+            <div class="premium-form-group">
+                <div class="label-row">
+                    <label for="password" class="form-label">Password</label>
+                </div>
+                <div class="input-relative-container">
+                    <div class="input-icon-left">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="input-svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                    </div>
+                    <input type="password" id="password" name="password" class="premium-input input-password" placeholder="••••••••" required {{ 'disabled' if locked }}>
+                    <button type="button" class="btn-toggle-password" tabindex="-1">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-icon-show eye-svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="eye-icon-hide eye-svg" style="display: none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="premium-auth-btn" {{ 'disabled' if locked }}>
+                <span>Sign In</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="btn-arrow-svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
+            </button>
+        </form>
+
+        <!-- Premium Visual Social Divider -->
+        <div class="auth-divider">
+            <span class="divider-line"></span>
+            <span class="divider-text">Or continue with</span>
+            <span class="divider-line"></span>
+        </div>
+
+        <!-- Premium Social Buttons -->
+        <div class="social-login-grid">
+            <button class="social-btn" type="button">
+                <svg viewBox="0 0 24 24" class="social-icon">
+                    <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                    <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                    <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" fill="#FBBC05"/>
+                    <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" fill="#EA4335"/>
+                </svg>
+                <span>Google</span>
+            </button>
+            <button class="social-btn" type="button">
+                <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.22.67-2.94 1.5-.63.73-1.18 1.87-1.03 2.97 1.12.09 2.27-.57 2.98-1.41z" />
+                </svg>
+                <span>Apple</span>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <div class="auth-card-footer">
+            Don't have an account? <a href="/register" class="auth-redirect-link">Register here</a>
+        </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Password visibility toggler
+    const toggleBtn = document.querySelector(".btn-toggle-password");
+    const passwordInput = document.querySelector(".input-password");
+    const eyeShow = document.querySelector(".eye-icon-show");
+    const eyeHide = document.querySelector(".eye-icon-hide");
+
+    if (toggleBtn && passwordInput) {
+        toggleBtn.addEventListener("click", function() {
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                eyeShow.style.display = "none";
+                eyeHide.style.display = "block";
+            } else {
+                passwordInput.type = "password";
+                eyeShow.style.display = "block";
+                eyeHide.style.display = "none";
+            }
+        });
+    }
+
+    // Cool input hover-glow tracking effect
+    const cards = document.querySelectorAll('.premium-input');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            let rect = e.target.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            let y = e.clientY - rect.top;
+            e.target.style.setProperty('--x', `${x}px`);
+            e.target.style.setProperty('--y', `${y}px`);
+        });
+    });
+});
+</script>
 {% endblock %}

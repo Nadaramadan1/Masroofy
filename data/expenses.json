@@ -214,5 +214,45 @@
         "amount": 600.0,
         "category": "Food",
         "date": "2026-05-05"
+    },
+    {
+        "expense_id": 28,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 50.0,
+        "category": "Transport",
+        "date": "2026-05-13"
+    },
+    {
+        "expense_id": 29,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 50.0,
+        "category": "Food",
+        "date": "2026-05-13"
+    },
+    {
+        "expense_id": 30,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 150.0,
+        "category": "Shopping",
+        "date": "2026-05-13"
+    },
+    {
+        "expense_id": 31,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 200.0,
+        "category": "Health",
+        "date": "2026-05-13"
+    },
+    {
+        "expense_id": 32,
+        "user_id": 13,
+        "cycle_id": 1,
+        "amount": 200.0,
+        "category": "Shopping",
+        "date": "2026-05-20"
     }
 ]

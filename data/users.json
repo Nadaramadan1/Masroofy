@@ -81,5 +81,12 @@
     "password_hash": "scrypt:32768:8:1$Sx0kvG37TPekKMLT$d6e728803a3af5c4fb3f8048c04d609839233f871e9c879252cfe611ce929d0b2f6064e0d5915fbd83b3c56bc129f7222aca2e0f42b476f26b7476265f3cddb3",
     "created_token": "a65a3e74047efe39d59371b7f2f56be4",
     "user_id": 12
+  },
+  {
+    "user_name": "nada",
+    "email": "nada.rshams@gmail.com",
+    "password_hash": "scrypt:32768:8:1$hDMrsJIkupUsqBY7$654c79a33a2a1fa873e06fad1b886d56154c240d2bbf573300f77f67b107a697aab032eb802bfc4d77aa2621cb2f093d35e7dbc5235111692bd2d9fdad0fb951",
+    "created_token": "753f0d280c0d0e8bc196f9aac743c1d1",
+    "user_id": 13
   }
 ]
